@@ -1,17 +1,42 @@
 #encoding:UTF-8
 import random
+import sys
+
+puntajeUsuario = 0
+puntajePc = 0
+puntajeTotal = 0
+
+def get_int():
+    userdata = input("Ingrese un número, o 's' para salir del programa ")
+    if userdata == 's':
+        print ("Nos vemos!")
+        sys.exit()
+    try:
+        user_num = int(userdata)
+        return user_num
+    except ValueError:
+        print("Necesito un número para continuar: ")
+        return(get_int())
+
+def porcentaje():
+        if puntajeTotal > 0: 
+            x = ((puntajeTotal - puntajePc) / puntajeTotal) * 100
+            return x
+        elif puntajeTotal == 0:
+            x = 0
+            return x
 
 while True: 
     aleatorio = random.randrange(0, 5)
     elijePc = ""
+    again = ""
     print("1)Piedra")
     print("2)Papel")
     print("3)Tijera")
     print("4)Lagarto")
     print("5)Spock")
-    print("6)Salir del Programa")
-    
-    opcion = int(input("Que eliges: "))
+    print("6)mostrarPuntajes")
+    opcion = get_int()
     
     if opcion == 1:
         eligeUsuario = "piedra"
@@ -24,13 +49,16 @@ while True:
     elif opcion == 5:
         eligeUsuario = "spock"
     elif opcion == 6:
-        print ("Nos vemos!")
-        break
+        print ("Puntajes: ")
+        print ("Usuario: ", puntajeUsuario)
+        print ("Pc: ", puntajePc)
+        print ("Porcentaje de victorias: ", porcentaje(), "%")
+        continue
     else:
-        print ("Valor Invalido")
+        print("Opción Invalida")
         continue
         
-    print("Tu eliges: ", eligeUsuario)   
+    print("Tu eliges: ", eligeUsuario)    
     if aleatorio == 0:
         eligePc = "piedra"
     elif aleatorio == 1:
@@ -46,48 +74,80 @@ while True:
     
     if eligePc == "piedra" and eligeUsuario == "papel":
         print("Ganaste, papel envuelve piedra")
+        puntajeUsuario+=1
     elif eligePc == "papel" and eligeUsuario == "tijera":
         print("Ganaste, tijera corta papel")
+        puntajeUsuario+=1
     elif eligePc == "tijera" and eligeUsuario == "piedra":
-        print("Ganaste, piedra pisa tijera")
-
-    # posibilidades lagarto
-        
-    elif eligePc == "spock" and eligeUsuario == "lagarto":
-        print("Ganaste, lagarto envenena spock")
-    elif eligePc == "papel" and eligeUsuario == "lagarto":
-        print("Ganaste, lagarto devora papel")
-    elif eligePc == "tijera" and eligeUsuario == "lagarto":
-        print("Perdiste, tijera decapita lagarto")
-    elif eligePc == "piedra" and eligeUsuario == "lagarto":
-        print("Perdiste, piedra aplasta lagarto")
-
-    # posibilidades spock
-
-    elif eligePc == "lagarto" and eligeUsuario == "spock":
-        print("Perdiste, lagarto envenena spock")
-    elif eligePc == "papel" and eligeUsuario == "spock":
-        print("Perdiste, papel desautoriza spock")
+        print("Ganaste, piedra aplasta tijera")
+        puntajeUsuario+=1
+    elif eligePc == "lagarto" and eligeUsuario == "piedra":
+        print("Ganaste, piedra aplasta a lagarto")
+        puntajeUsuario+=1
+    elif eligePc == "lagarto" and eligeUsuario == "tijera":
+        print("Ganaste, tijera decapita a Lagarto")
+        puntajeUsuario+=1
     elif eligePc == "tijera" and eligeUsuario == "spock":
-        print("Ganaste, spock rompe tijera")
+        print("Ganaste, Spock rompe tijera")
+        puntajeUsuario+=1
+    elif eligePc == "spock" and eligeUsuario == "lagarto":
+        print("Ganaste, lagarto envenena a Spock")
+        puntajeUsuario+=1
+    elif eligePc == "papel" and eligeUsuario == "lagarto":
+        print ("Ganaste, lagarto devora papel")
+        puntajeUsuario+=1
+    elif eligePc == "spock" and eligeUsuario == "papel":
+        print ("Ganaste, papel desautoriza a Spock")
+        puntajeUsuario+=1
     elif eligePc == "piedra" and eligeUsuario == "spock":
-        print("Ganaste, spock vaporiza piedra")
-    
-     
+        print ("Ganaste, Spock vaporiza piedra")
+        puntajeUsuario+=1
+        
     if eligeUsuario == "piedra" and eligePc == "papel":
         print("Perdiste, papel envuelve piedra")
+        puntajePc+=1
     elif eligeUsuario == "papel" and eligePc == "tijera":
         print("Perdiste, tijera corta papel")
+        puntajePc+=1
     elif eligeUsuario == "tijera" and eligePc == "piedra":
-        print("Perdiste, piedra pisa tijera")
-
-
+        print("Perdiste, piedra aplasta tijera")
+        puntajePc+=1
+    elif eligeUsuario == "lagarto" and eligePc == "piedra":
+        print("Perdiste, piedra aplasta a lagarto")
+        puntajePc+=1
+    elif eligeUsuario == "lagarto" and eligePc == "tijera":
+        print("Perdiste, tijera decapita a Lagarto")
+        puntajePc+=1
+    elif eligeUsuario == "tijera" and eligePc == "spock":
+        print("Perdiste, Spock rompe tijera")
+        puntajePc+=1
+    elif eligeUsuario == "spock" and eligePc == "lagarto":
+        print("Perdiste, lagarto envenena a Spock")
+        puntajePc+=1
+    elif eligeUsuario == "papel" and eligePc == "lagarto":
+        print ("Perdiste, lagarto devora papel")
+        puntajePc+=1
+    elif eligeUsuario == "spock" and eligePc == "papel":
+        print ("Perdiste, papel desautoriza a Spock")
+        puntajePc+=1
+    elif eligeUsuario == "piedra" and eligePc == "spock":
+        print ("Perdiste, Spock vaporiza piedra")
+        puntajePc+=1
     elif eligePc == eligeUsuario:
         print("Empate")
-    again = input("Jugamos de nuevo? Si/No: ")
-    if 'si' in again:
-        continue
-    elif 'no' in again:
-        print("Nos vemos!")
-        break
-    else:
+
+    puntajeTotal = puntajePc + puntajeUsuario
+    porcentajes = porcentaje()
+    print("El porcentaje es: ", porcentajes)
+
+    while again == "":
+        again = input("Jugamos de nuevo? Si/No: ")
+        if 'si' in again:
+            break
+        elif 'no' in again:
+            print("Nos vemos!")
+            sys.exit()
+        else:
+            print("Valor Invalido")
+            again = ""
+            continue
