@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu: 16.04
 ENV DEBIAN_FRONTEND noninteractive
 MAINTAINER someuser@somedomain.com
 RUN apt-get update
